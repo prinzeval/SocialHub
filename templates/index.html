@@ -1,46 +1,270 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bing Visual Search Results</title>
-    <style>
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+    <title>Instagram Tools</title>
+                    
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
         }
-        .image-card {
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 200px;
+        h1, h2 {
+            color: #405DE6;
             text-align: center;
         }
-        .image-card img {
-            max-width: 100%;
-            height: auto;
+        .tools-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .tool-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            width: 45%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, button {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #405DE6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2C3E8C;
+        }
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .nav-tabs li {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 5px;
+            border: 1px solid transparent;
+            border-radius: 4px 4px 0 0;
+        }
+        .nav-tabs li.active {
+            border-color: #ddd;
+            border-bottom-color: #fff;
+            margin-bottom: -1px;
+            font-weight: bold;
+            color: #405DE6;
+        }
+        .tab-content {
+            padding: 20px 0;
+        }
+        .tab-content .tab-pane {
+            display: none;
+        }
+        .tab-content .tab-pane.active {
+            display: block;
+        }
+        #results {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 500px;
+            overflow: auto;
+            display: none;
+        }
+        .loading {
+            text-align: center;
+            display: none;
+        }
+        .post-results {
+            margin-top: 20px;
+            display: none;
+        }
+        .post-card {
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .post-caption {
+            margin-bottom: 10px;
+            font-style: italic;
+            color: #555;
+        }
+        .post-link {
+            display: block;
+            margin: 10px 0;
+            color: #405DE6;
+            text-decoration: none;
+        }
+        .post-link:hover {
+            text-decoration: underline;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #405DE6;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .download-btn:hover {
+            background-color: #2C3E8C;
         }
     </style>
 </head>
 <body>
-    <h1>Bing Visual Search</h1>
-    <form method="POST">
-        <label for="image_url">Image URL:</label>
-        <input type="text" id="image_url" name="image_url" required>
-        <button type="submit">Search</button>
-    </form>
-
-    {% if image_data %}
-        <h2>Search Results</h2>
-        <div class="image-container">
-            {% for image in image_data %}
-                <div class="image-card">
-                    <img src="{{ image.src }}" alt="{{ image.alt }}">
-                    <p><strong>Title:</strong> {{ image.title }}</p>
-                    <p><strong>Domain:</strong> {{ image.domain }}</p>
-                </div>
-            {% endfor %}
+    <h1>Instagram Tools</h1>
+    <ul class="nav-tabs">
+        <li class="active" onclick="switchTab('scraper')">Profile Scraper</li>
+        <li onclick="switchTab('downloader')">Media Downloader</li>
+    </ul>
+    <div class="tab-content">
+        <div id="scraper" class="tab-pane active">
+            <h2>Instagram Profile Scraper</h2>
+            <div class="form-group">
+                <label for="instagram-pages">Instagram Pages (separated by commas):</label>
+                <input type="text" id="instagram-pages" placeholder="e.g., valorgi, hotfreestyle">
+            </div>
+            <div class="form-group">
+                <label for="post-limit">Number of Posts to Scrape:</label>
+                <input type="number" id="post-limit" value="10" min="1" max="50">
+            </div>
+            <button id="scrape-btn">Scrape Instagram Pages</button>
+            <div class="loading" id="loading">
+                <p>Scraping data, please wait...</p>
+            </div>
+            <div id="results"></div>
+            <div id="post-results" class="post-results"></div>
+            <button id="preview-all-btn" style="display: none; margin-top: 20px;">Preview All</button>
         </div>
-    {% endif %}
+        <div id="downloader" class="tab-pane">
+            <h2>Instagram Media Downloader</h2>
+            <form action="/download" method="POST">
+                <div class="form-group">
+                    <label for="post_url">Instagram Post URL(s):</label>
+                    <input type="text" id="post_url" name="post_url" placeholder="https://www.instagram.com/p/XXXXXX/" required>
+                </div>
+                <button type="submit">Get Media</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-tabs li').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.nav-tabs li[onclick="switchTab('${tabId}')"]`).classList.add('active');
+        }
+        document.getElementById('scrape-btn').addEventListener('click', async function() {
+            const instagramPages = document.getElementById('instagram-pages').value;
+            const postLimit = document.getElementById('post-limit').value;
+            if (!instagramPages) {
+                alert('Please enter at least one Instagram page');
+                return;
+            }
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            const postResults = document.getElementById('post-results');
+            const previewAllBtn = document.getElementById('preview-all-btn');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            postResults.style.display = 'none';
+            postResults.innerHTML = '';
+            previewAllBtn.style.display = 'none';
+            try {
+                const response = await fetch('/scrape', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({instagram_pages: instagramPages, post_limit: postLimit}),
+                });
+                const data = await response.json();
+                results.textContent = JSON.stringify(data, null, 2);
+                let hasValidPosts = false;
+                const postUrls = [];
+                for (const [page, posts] of Object.entries(data)) {
+                    if (Array.isArray(posts) && posts.length > 0) {
+                        hasValidPosts = true;
+                        const pageHeader = document.createElement('h3');
+                        pageHeader.textContent = `Posts from ${page}`;
+                        postResults.appendChild(pageHeader);
+                        posts.forEach(post => {
+                            const postCard = document.createElement('div');
+                            postCard.className = 'post-card';
+                            const caption = document.createElement('div');
+                            caption.className = 'post-caption';
+                            caption.textContent = post.caption;
+                            const link = document.createElement('a');
+                            link.className = 'post-link';
+                            link.href = post.post_url;
+                            link.textContent = post.post_url;
+                            link.target = '_blank';
+                            postCard.appendChild(caption);
+                            postCard.appendChild(link);
+                            postResults.appendChild(postCard);
+                            if (post.post_url && post.post_url !== "No URL") {
+                                postUrls.push(post.post_url);
+                            }
+                        });
+                    }
+                }
+                if (hasValidPosts) {
+                    postResults.style.display = 'block';
+                    previewAllBtn.style.display = 'block';
+                    previewAllBtn.addEventListener('click', () => {
+                        const downloadTab = document.getElementById('downloader');
+                        const postUrlInput = downloadTab.querySelector('#post_url');
+                        postUrlInput.value = postUrls.join(',');
+                        switchTab('downloader');
+                        downloadTab.querySelector('form').submit();
+                    });
+                } else {
+                    const noPostsMessage = document.createElement('p');
+                    noPostsMessage.textContent = 'No posts found or error occurred.';
+                    postResults.appendChild(noPostsMessage);
+                    postResults.style.display = 'block';
+                }
+            } catch (error) {
+                results.textContent = 'Error: ' + error.message;
+                results.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
+        

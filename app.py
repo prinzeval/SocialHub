@@ -7,11 +7,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
+import json
 
 app = Flask(__name__)
 
 # Set up Selenium WebDriver
 def get_driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  # Run in headless mode, comment this out if you want to see the browser
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")  # Open in full screen
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
@@ -46,6 +49,20 @@ def handle_consent(driver):
             break  # Exit loop if a button is found and clicked
         except:
             pass  # Continue if button is not found
+
+# Function to scroll the page to load all results
+def scroll_page(driver):
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while True:
+        # Scroll down to the bottom
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)  # Wait for new results to load
+
+        # Calculate new scroll height and compare with last scroll height
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break  # Exit if no more results are loading
+        last_height = new_height
 
 # Function to open Bing Visual Search, handle consent, paste URL, press Enter, and click the Visual Search button
 def open_bing_with_image(image_url):
@@ -88,15 +105,24 @@ def open_bing_with_image(image_url):
     # Wait for the results to load
     time.sleep(4)  # Wait for 4 seconds to ensure the results are fully loaded
 
+    # Scroll the page to load all results
+    scroll_page(driver)
+
     # Extract all image data from the results
     image_data = []
     try:
         results = driver.find_elements(By.CSS_SELECTOR, ".expander_content li")
         for result in results:
             try:
-                # Extract image URL
+                # Extract the full image URL from the data-m attribute
+                link_tag = result.find_element(By.CSS_SELECTOR, "a.richImgLnk")
+                data_m = link_tag.get_attribute("data-m")
+                data_m_json = json.loads(data_m)
+                full_image_url = data_m_json.get("murl", "")
+
+                # Extract thumbnail URL
                 img_tag = result.find_element(By.CSS_SELECTOR, "img")
-                src = img_tag.get_attribute("src")
+                thumbnail_url = img_tag.get_attribute("src")
                 alt = img_tag.get_attribute("alt")
 
                 # Extract title (if available)
@@ -106,7 +132,7 @@ def open_bing_with_image(image_url):
                 domain = result.find_element(By.CSS_SELECTOR, ".domain").text if result.find_elements(By.CSS_SELECTOR, ".domain") else "No domain"
 
                 # Append the data to the list
-                image_data.append({"src": src, "alt": alt, "title": title, "domain": domain})
+                image_data.append({"full_image_url": full_image_url, "thumbnail_url": thumbnail_url, "alt": alt, "title": title, "domain": domain})
             except Exception as e:
                 print(f"❌ Error extracting data from a result: {e}")
     except Exception as e:
