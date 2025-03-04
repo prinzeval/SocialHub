@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Media Downloader</title>
+                
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #405DE6;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 8px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #405DE6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #2C3E8C;
+        }
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .media-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            width: 320px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .media-item img, .media-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            background-color: #405DE6;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+        .download-btn:hover {
+            background-color: #2C3E8C;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #ffeeee;
+            border-radius: 5px;
+        }
+        .media-count {
+            margin: 10px 0;
+            color: #666;
+        }
+        .media-number {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            font-style: italic;
+            color: #666;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 20px 0;
+            color: #405DE6;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .post-caption {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #405DE6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Instagram Media Downloader</h1>
+    <a href="/" class="back-link">← Back to Home</a>
+    <form method="POST">
+        <div class="form-group">
+            <label for="post_url">Instagram Post URL(s):</label>
+            <input type="text" id="post_url" name="post_url" value="{{ post_urls }}" placeholder="https://www.instagram.com/p/XXXXXX/" required>
+            <button type="submit">Get Media</button>
+        </div>
+    </form>
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+    {% if media_urls %}
+        <h2>Media Preview</h2>
+        <div class="media-count">Found {{ media_urls|length }} media item{% if media_urls|length > 1 %}s{% endif %}</div>
+        <div class="media-container">
+            {% for media in media_urls %}
+                <div class="media-item">
+                    <div class="media-number">Item {{ loop.index }} of {{ media_urls|length }}</div>
+                    {% if media.type == 'image' %}
+                        <img src="{{ media.preview_url }}" alt="Instagram Image" loading="lazy">
+                    {% elif media.type == 'video' %}
+                        <video controls preload="metadata">
+                            <source src="{{ media.preview_url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+                    <div class="caption">{{ media.caption }}</div>
+                    <a href="{{ url_for('download_media', media_id=media.id, media_type=media.type) }}" class="download-btn">Download {{ media.type|capitalize }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.addEventListener('loadstart', function() {
+                    this.setAttribute('poster', 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="14" text-anchor="middle" alignment-baseline="middle" font-family="Arial, sans-serif">Loading video...</text></svg>');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+        

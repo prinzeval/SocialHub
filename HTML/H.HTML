@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tariff & Rate Configuration - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Tariff & Rate Configuration</h1>
+
+        <!-- Tariff List -->
+        <section class="tariff-list">
+            <h2>Tariff List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tariff ID</th>
+                        <th>Name</th>
+                        <th>Rate (₦/kWh)</th>
+                        <th>Effective Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>Residential Basic</td>
+                        <td>50</td>
+                        <td>2023-01-01</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>View</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Tariff Details Form -->
+        <section class="tariff-details">
+            <h2>Tariff Details</h2>
+            <form>
+                <label for="name">Tariff Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="rate">Rate (₦/kWh):</label>
+                <input type="text" id="rate" name="rate" required>
+
+                <label for="effective-date">Effective Date:</label>
+                <input type="date" id="effective-date" name="effective-date" required>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Tariff Simulation -->
+        <section class="tariff-simulation">
+            <h2>Tariff Simulation</h2>
+            <form>
+                <label for="simulation-account-id">Account ID:</label>
+                <input type="text" id="simulation-account-id" name="simulation-account-id" required>
+
+                <label for="simulation-tariff-id">Tariff ID:</label>
+                <input type="text" id="simulation-tariff-id" name="simulation-tariff-id" required>
+
+                <button type="submit">Simulate</button>
+            </form>
+        </section>
+
+        <!-- Tariff Approval Workflow -->
+        <section class="tariff-approval">
+            <h2>Tariff Approval</h2>
+            <form>
+                <label for="approval-tariff-id">Tariff ID:</label>
+                <input type="text" id="approval-tariff-id" name="approval-tariff-id" required>
+
+                <label for="approval-status">Status:</label>
+                <select id="approval-status" name="approval-status">
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <!-- Historical Tariff Data -->
+        <section class="historical-tariff">
+            <h2>Historical Tariff Data</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tariff ID</th>
+                        <th>Name</th>
+                        <th>Rate (₦/kWh)</th>
+                        <th>Effective Date</th>
+                        <th>Terminal Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>Residential Basic</td>
+                        <td>50</td>
+                        <td>2023-01-01</td>
+                        <td>2023-12-31</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

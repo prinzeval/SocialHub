@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt Recovery - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Debt Recovery Workflow</h1>
+
+        <!-- Debt Assignment Section -->
+        <section class="debt-assignment">
+            <h2>Assign Debt to Collection Partner</h2>
+            <form>
+                <label for="debt-id">Debt ID:</label>
+                <input type="text" id="debt-id" name="debt-id" required>
+
+                <label for="partner">Collection Partner:</label>
+                <select id="partner" name="partner">
+                    <option value="001">Partner A</option>
+                    <option value="002">Partner B</option>
+                </select>
+
+                <button type="submit">Assign</button>
+            </form>
+        </section>
+
+        <!-- Debt Recovery Progress -->
+        <section class="recovery-progress">
+            <h2>Debt Recovery Progress</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Debt ID</th>
+                        <th>Assigned Partner</th>
+                        <th>Amount Recovered</th>
+                        <th>Outstanding</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>Partner A</td>
+                        <td>₦2,000</td>
+                        <td>₦3,000</td>
+                        <td>In Progress</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Debt Write-Off Section -->
+        <section class="debt-writeoff">
+            <h2>Write Off Debt</h2>
+            <form>
+                <label for="writeoff-debt-id">Debt ID:</label>
+                <input type="text" id="writeoff-debt-id" name="writeoff-debt-id" required>
+
+                <label for="reason">Reason:</label>
+                <textarea id="reason" name="reason"></textarea>
+
+                <button type="submit">Write Off</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

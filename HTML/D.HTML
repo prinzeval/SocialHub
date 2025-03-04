@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Management - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Property Management</h1>
+
+        <!-- Search and Filter -->
+        <section class="search-filter">
+            <input type="text" placeholder="Search Properties">
+            <select>
+                <option value="all">All Property Types</option>
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+            </select>
+            <button>Apply Filters</button>
+            <button>Add New Property</button>
+        </section>
+
+        <!-- Property List -->
+        <section class="property-list">
+            <h2>Property List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property ID</th>
+                        <th>Address</th>
+                        <th>Landmark</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>123 Main St</td>
+                        <td>Near Park</td>
+                        <td>Active</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>View</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Property Details Form -->
+        <section class="property-details">
+            <h2>Property Details</h2>
+            <form>
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="landmark">Landmark:</label>
+                <input type="text" id="landmark" name="landmark">
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Property Map Integration -->
+        <section class="property-map">
+            <h2>Property Location</h2>
+            <div id="map" style="height: 300px; width: 100%;"></div>
+            <button>View on Map</button>
+        </section>
+
+        <!-- Property Occupancy History -->
+        <section class="occupancy-history">
+            <h2>Occupancy History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Occupant Name</th>
+                        <th>Type</th>
+                        <th>Lease Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-01-01</td>
+                        <td>John Doe</td>
+                        <td>Residential</td>
+                        <td>2023-01-01 to 2023-12-31</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Property Maintenance Log -->
+        <section class="maintenance-log">
+            <h2>Maintenance Log</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-09-15</td>
+                        <td>Roof Repair</td>
+                        <td>₦50,000</td>
+                        <td><button>View Details</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>Add Maintenance Record</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

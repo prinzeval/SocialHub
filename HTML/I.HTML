@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Reports & Analytics</h1>
+
+        <!-- Report Filters -->
+        <section class="report-filters">
+            <h2>Generate Report</h2>
+            <form>
+                <label for="report-type">Report Type:</label>
+                <select id="report-type" name="report-type">
+                    <option value="revenue">Revenue Report</option>
+                    <option value="consumption">Consumption Report</option>
+                    <option value="debt">Debt Report</option>
+                </select>
+
+                <label for="date-range">Date Range:</label>
+                <input type="date" id="start-date" name="start-date">
+                <input type="date" id="end-date" name="end-date">
+
+                <button type="submit">Generate Report</button>
+            </form>
+        </section>
+
+        <!-- Report Results -->
+        <section class="report-results">
+            <h2>Report Results</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Revenue (₦)</th>
+                        <th>Consumption (kWh)</th>
+                        <th>Outstanding Debt (₦)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-10-01</td>
+                        <td>₦500,000</td>
+                        <td>10,000</td>
+                        <td>₦200,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Custom Report Builder -->
+        <section class="custom-report">
+            <h2>Custom Report Builder</h2>
+            <form>
+                <label for="report-columns">Select Columns:</label>
+                <select id="report-columns" name="report-columns" multiple>
+                    <option value="revenue">Revenue</option>
+                    <option value="consumption">Consumption</option>
+                    <option value="debt">Debt</option>
+                </select>
+
+                <label for="report-filters">Apply Filters:</label>
+                <input type="text" id="report-filters" name="report-filters">
+
+                <button type="submit">Build Report</button>
+            </form>
+        </section>
+
+        <!-- Real-Time Analytics -->
+        <section class="real-time-analytics">
+            <h2>Real-Time Analytics</h2>
+            <div id="analytics-chart" style="height: 300px; width: 100%;"></div>
+            <button>Refresh Data</button>
+        </section>
+
+        <!-- Debt Aging Report -->
+        <section class="debt-aging">
+            <h2>Debt Aging Report</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Debt ID</th>
+                        <th>Account ID</th>
+                        <th>Amount (₦)</th>
+                        <th>Days Overdue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>001</td>
+                        <td>₦5,000</td>
+                        <td>30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings & Administration - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Settings & Administration</h1>
+
+        <!-- User Management -->
+        <section class="user-management">
+            <h2>User Management</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>admin</td>
+                        <td>Administrator</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>Add New User</button>
+        </section>
+
+        <!-- Role Configuration -->
+        <section class="role-configuration">
+            <h2>Role Configuration</h2>
+            <form>
+                <label for="role-name">Role Name:</label>
+                <input type="text" id="role-name" name="role-name" required>
+
+                <label for="permissions">Permissions:</label>
+                <textarea id="permissions" name="permissions"></textarea>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Audit Logs -->
+        <section class="audit-logs">
+            <h2>Audit Logs</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-10-01</td>
+                        <td>admin</td>
+                        <td>Updated Tariff</td>
+                        <td>Tariff ID: 001</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>View All Logs</button>
+        </section>
+
+        <!-- System Backup & Restore -->
+        <section class="backup-restore">
+            <h2>System Backup & Restore</h2>
+            <form>
+                <label for="backup-type">Backup Type:</label>
+                <select id="backup-type" name="backup-type">
+                    <option value="full">Full Backup</option>
+                    <option value="partial">Partial Backup</option>
+                </select>
+
+                <button type="submit">Backup Now</button>
+                <button type="button">Restore</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

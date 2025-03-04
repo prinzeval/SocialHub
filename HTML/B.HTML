@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Customer Management</h1>
+
+        <!-- Search and Filter -->
+        <section class="search-filter">
+            <input type="text" placeholder="Search Customers">
+            <select>
+                <option value="all">All Customer Types</option>
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+            </select>
+            <button>Apply Filters</button>
+            <button>Add New Customer</button>
+        </section>
+
+        <!-- Customer List -->
+        <section class="customer-list">
+            <h2>Customer List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>123-456-7890</td>
+                        <td>Residential</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>View</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Customer Details Form -->
+        <section class="customer-details">
+            <h2>Customer Details</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" required>
+
+                <label for="type">Customer Type:</label>
+                <select id="type" name="type">
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                </select>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Customer Verification Section -->
+        <section class="customer-verification">
+            <h2>Customer Verification</h2>
+            <form>
+                <label for="id-doc">Upload ID Document:</label>
+                <input type="file" id="id-doc" name="id-doc" required>
+
+                <label for="id-number">ID Number:</label>
+                <input type="text" id="id-number" name="id-number" required>
+
+                <button type="submit">Verify</button>
+            </form>
+        </section>
+
+        <!-- Customer History Section -->
+        <section class="customer-history">
+            <h2>Customer History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Activity</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-10-01</td>
+                        <td>Bill Generated</td>
+                        <td>Bill #BL12345 for ₦5,000</td>
+                    </tr>
+                    <tr>
+                        <td>2023-10-05</td>
+                        <td>Payment Received</td>
+                        <td>Payment of ₦5,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Customer Communication Log -->
+        <section class="communication-log">
+            <h2>Communication Log</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Message</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-10-01</td>
+                        <td>Email</td>
+                        <td>Bill Notification Sent</td>
+                        <td><button>Resend</button></td>
+                    </tr>
+                    <tr>
+                        <td>2023-10-05</td>
+                        <td>SMS</td>
+                        <td>Payment Confirmation Sent</td>
+                        <td><button>Resend</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>Send New Communication</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

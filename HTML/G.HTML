@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Management - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Payment Management</h1>
+
+        <!-- Search and Filter -->
+        <section class="search-filter">
+            <input type="text" placeholder="Search Payments">
+            <select>
+                <option value="all">All Payment Types</option>
+                <option value="cash">Cash</option>
+                <option value="bank">Bank Transfer</option>
+            </select>
+            <button>Apply Filters</button>
+            <button>Record New Payment</button>
+        </section>
+
+        <!-- Payment List -->
+        <section class="payment-list">
+            <h2>Payment List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Payment ID</th>
+                        <th>Account ID</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>001</td>
+                        <td>₦5,000</td>
+                        <td>2023-10-01</td>
+                        <td>Completed</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>View</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Payment Details Form -->
+        <section class="payment-details">
+            <h2>Payment Details</h2>
+            <form>
+                <label for="account">Account ID:</label>
+                <input type="text" id="account" name="account" required>
+
+                <label for="amount">Amount:</label>
+                <input type="text" id="amount" name="amount" required>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                </select>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Payment Plan Setup -->
+        <section class="payment-plan">
+            <h2>Set Up Payment Plan</h2>
+            <form>
+                <label for="plan-account-id">Account ID:</label>
+                <input type="text" id="plan-account-id" name="plan-account-id" required>
+
+                <label for="installment-amount">Installment Amount:</label>
+                <input type="text" id="installment-amount" name="installment-amount" required>
+
+                <label for="installment-count">Number of Installments:</label>
+                <input type="number" id="installment-count" name="installment-count" required>
+
+                <button type="submit">Create Plan</button>
+            </form>
+        </section>
+
+        <!-- Payment Reconciliation -->
+        <section class="payment-reconciliation">
+            <h2>Payment Reconciliation</h2>
+            <form>
+                <label for="reconcile-payment-id">Payment ID:</label>
+                <input type="text" id="reconcile-payment-id" name="reconcile-payment-id" required>
+
+                <label for="bank-statement">Upload Bank Statement:</label>
+                <input type="file" id="bank-statement" name="bank-statement" required>
+
+                <button type="submit">Reconcile</button>
+            </form>
+        </section>
+
+        <!-- Payment Refund -->
+        <section class="payment-refund">
+            <h2>Process Refund</h2>
+            <form>
+                <label for="refund-payment-id">Payment ID:</label>
+                <input type="text" id="refund-payment-id" name="refund-payment-id" required>
+
+                <label for="refund-amount">Refund Amount:</label>
+                <input type="text" id="refund-amount" name="refund-amount" required>
+
+                <label for="refund-reason">Reason:</label>
+                <textarea id="refund-reason" name="refund-reason"></textarea>
+
+                <button type="submit">Process Refund</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

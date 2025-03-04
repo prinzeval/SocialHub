@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bing Visual Search Results</title>
+    <style>
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .image-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .image-card img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bing Visual Search</h1>
+    <form method="POST">
+        <label for="image_url">Image URL:</label>
+        <input type="text" id="image_url" name="image_url" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if image_data %}
+        <h2>Search Results</h2>
+        <div class="image-container">
+            {% for image in image_data %}
+                <div class="image-card">
+                    <img src="{{ image.src }}" alt="{{ image.alt }}">
+                    <p><strong>Title:</strong> {{ image.title }}</p>
+                    <p><strong>Domain:</strong> {{ image.domain }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>

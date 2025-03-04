@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing & Invoice Management - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Billing & Invoice Management</h1>
+
+        <!-- Search and Filter -->
+        <section class="search-filter">
+            <input type="text" placeholder="Search Bills">
+            <select>
+                <option value="all">All Bill Types</option>
+                <option value="paid">Paid</option>
+                <option value="unpaid">Unpaid</option>
+            </select>
+            <button>Apply Filters</button>
+            <button>Generate New Bill</button>
+        </section>
+
+        <!-- Bill List -->
+        <section class="bill-list">
+            <h2>Bill List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bill ID</th>
+                        <th>Account ID</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>001</td>
+                        <td>₦5,000</td>
+                        <td>Unpaid</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>View</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Bill Details Form -->
+        <section class="bill-details">
+            <h2>Bill Details</h2>
+            <form>
+                <label for="account">Account ID:</label>
+                <input type="text" id="account" name="account" required>
+
+                <label for="amount">Amount:</label>
+                <input type="text" id="amount" name="amount" required>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="unpaid">Unpaid</option>
+                    <option value="paid">Paid</option>
+                </select>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Bill Dispute Resolution -->
+        <section class="dispute-resolution">
+            <h2>Bill Dispute Resolution</h2>
+            <form>
+                <label for="dispute-bill-id">Bill ID:</label>
+                <input type="text" id="dispute-bill-id" name="dispute-bill-id" required>
+
+                <label for="dispute-reason">Reason:</label>
+                <textarea id="dispute-reason" name="dispute-reason"></textarea>
+
+                <button type="submit">Resolve Dispute</button>
+            </form>
+        </section>
+
+        <!-- Bill Reprint -->
+        <section class="bill-reprint">
+            <h2>Reprint Bill</h2>
+            <form>
+                <label for="reprint-bill-id">Bill ID:</label>
+                <input type="text" id="reprint-bill-id" name="reprint-bill-id" required>
+
+                <button type="submit">Reprint</button>
+            </form>
+        </section>
+
+        <!-- Billing Cycle Configuration -->
+        <section class="billing-cycle">
+            <h2>Billing Cycle Configuration</h2>
+            <form>
+                <label for="cycle-type">Cycle Type:</label>
+                <select id="cycle-type" name="cycle-type">
+                    <option value="monthly">Monthly</option>
+                    <option value="bimonthly">Bi-Monthly</option>
+                </select>
+
+                <label for="cycle-start-date">Start Date:</label>
+                <input type="date" id="cycle-start-date" name="cycle-start-date" required>
+
+                <button type="submit">Save Configuration</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

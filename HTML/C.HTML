@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Management - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Account Management</h1>
+
+        <!-- Search and Filter -->
+        <section class="search-filter">
+            <input type="text" placeholder="Search Accounts">
+            <select>
+                <option value="all">All Account Types</option>
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+            </select>
+            <button>Apply Filters</button>
+            <button>Add New Account</button>
+        </section>
+
+        <!-- Account List -->
+        <section class="account-list">
+            <h2>Account List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Account ID</th>
+                        <th>Customer Name</th>
+                        <th>Property Address</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>123 Main St</td>
+                        <td>₦5,000</td>
+                        <td>Active</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>View</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Account Details Form -->
+        <section class="account-details">
+            <h2>Account Details</h2>
+            <form>
+                <label for="customer">Customer:</label>
+                <select id="customer" name="customer">
+                    <option value="001">John Doe</option>
+                    <option value="002">Jane Smith</option>
+                </select>
+
+                <label for="property">Property:</label>
+                <select id="property" name="property">
+                    <option value="001">123 Main St</option>
+                    <option value="002">456 Elm St</option>
+                </select>
+
+                <label for="balance">Balance:</label>
+                <input type="text" id="balance" name="balance">
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Account Linking Section -->
+        <section class="account-linking">
+            <h2>Link Property to Account</h2>
+            <form>
+                <label for="account-id">Account ID:</label>
+                <input type="text" id="account-id" name="account-id" required>
+
+                <label for="property-id">Property ID:</label>
+                <input type="text" id="property-id" name="property-id" required>
+
+                <button type="submit">Link Property</button>
+            </form>
+        </section>
+
+        <!-- Account Balance Adjustment -->
+        <section class="balance-adjustment">
+            <h2>Adjust Account Balance</h2>
+            <form>
+                <label for="adjust-account-id">Account ID:</label>
+                <input type="text" id="adjust-account-id" name="adjust-account-id" required>
+
+                <label for="adjustment-amount">Adjustment Amount:</label>
+                <input type="text" id="adjustment-amount" name="adjustment-amount" required>
+
+                <label for="adjustment-reason">Reason:</label>
+                <textarea id="adjustment-reason" name="adjustment-reason"></textarea>
+
+                <button type="submit">Adjust Balance</button>
+            </form>
+        </section>
+
+        <!-- Account Suspension/Reactivation -->
+        <section class="account-status">
+            <h2>Suspend/Reactivate Account</h2>
+            <form>
+                <label for="status-account-id">Account ID:</label>
+                <input type="text" id="status-account-id" name="status-account-id" required>
+
+                <label for="status-action">Action:</label>
+                <select id="status-action" name="status-action">
+                    <option value="suspend">Suspend</option>
+                    <option value="reactivate">Reactivate</option>
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meter & Reading Management - Utility Billing System</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Utility Billing System</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="accounts.html">Accounts</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="meters.html">Meters</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="payments.html">Payments</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span>Welcome, Admin</span>
+            <button>Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Meter & Reading Management</h1>
+
+        <!-- Search and Filter -->
+        <section class="search-filter">
+            <input type="text" placeholder="Search Meters">
+            <select>
+                <option value="all">All Meter Types</option>
+                <option value="prepaid">Prepaid</option>
+                <option value="postpaid">Postpaid</option>
+            </select>
+            <button>Apply Filters</button>
+            <button>Add New Meter</button>
+        </section>
+
+        <!-- Meter List -->
+        <section class="meter-list">
+            <h2>Meter List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Meter ID</th>
+                        <th>Meter Number</th>
+                        <th>Account ID</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>MT12345</td>
+                        <td>001</td>
+                        <td>Prepaid</td>
+                        <td>Active</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>View</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Meter Details Form -->
+        <section class="meter-details">
+            <h2>Meter Details</h2>
+            <form>
+                <label for="meter-number">Meter Number:</label>
+                <input type="text" id="meter-number" name="meter-number" required>
+
+                <label for="meter-type">Meter Type:</label>
+                <select id="meter-type" name="meter-type">
+                    <option value="prepaid">Prepaid</option>
+                    <option value="postpaid">Postpaid</option>
+                </select>
+
+                <label for="installation-date">Installation Date:</label>
+                <input type="date" id="installation-date" name="installation-date" required>
+
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Meter Replacement History -->
+        <section class="replacement-history">
+            <h2>Meter Replacement History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Old Meter Number</th>
+                        <th>New Meter Number</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-09-01</td>
+                        <td>MT12345</td>
+                        <td>MT67890</td>
+                        <td>Faulty Meter</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>Replace Meter</button>
+        </section>
+
+        <!-- Reading Discrepancy Resolution -->
+        <section class="discrepancy-resolution">
+            <h2>Reading Discrepancy Resolution</h2>
+            <form>
+                <label for="discrepancy-reading-id">Reading ID:</label>
+                <input type="text" id="discrepancy-reading-id" name="discrepancy-reading-id" required>
+
+                <label for="discrepancy-reason">Reason:</label>
+                <textarea id="discrepancy-reason" name="discrepancy-reason"></textarea>
+
+                <button type="submit">Resolve Discrepancy</button>
+            </form>
+        </section>
+
+        <!-- Meter Health Monitoring -->
+        <section class="meter-health">
+            <h2>Meter Health Monitoring</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Meter ID</th>
+                        <th>Battery Level</th>
+                        <th>Signal Strength</th>
+                        <th>Last Check</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>85%</td>
+                        <td>Strong</td>
+                        <td>2023-10-01</td>
+                        <td>Healthy</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>Refresh Data</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Utility Billing System</p>
+    </footer>
+</body>
+</html>
