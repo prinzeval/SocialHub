@@ -1,12 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Tools</title>
-                    
-<style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 1000px;
@@ -189,6 +187,7 @@
             document.getElementById(tabId).classList.add('active');
             document.querySelector(`.nav-tabs li[onclick="switchTab('${tabId}')"]`).classList.add('active');
         }
+
         document.getElementById('scrape-btn').addEventListener('click', async function() {
             const instagramPages = document.getElementById('instagram-pages').value;
             const postLimit = document.getElementById('post-limit').value;
@@ -267,4 +266,3 @@
     </script>
 </body>
 </html>
-        

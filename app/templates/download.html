@@ -1,12 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Media Downloader</title>
-                
-<style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 1000px;
@@ -105,6 +103,45 @@
             border-left: 4px solid #405DE6;
             font-style: italic;
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover, .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .edit-image-item {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        .edit-image-item img {
+            max-width: 100px;
+            max-height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -137,20 +174,56 @@
                     {% endif %}
                     <div class="caption">{{ media.caption }}</div>
                     <a href="{{ url_for('download_media', media_id=media.id, media_type=media.type) }}" class="download-btn">Download {{ media.type|capitalize }}</a>
+                    <button class="edit-btn" onclick="editImage('{{ media.original_url }}', '{{ media.id }}')">Edit</button>
                 </div>
             {% endfor %}
         </div>
     {% endif %}
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Edit Image</h2>
+            <div id="edit-results"></div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                video.addEventListener('loadstart', function() {
-                    this.setAttribute('poster', 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="14" text-anchor="middle" alignment-baseline="middle" font-family="Arial, sans-serif">Loading video...</text></svg>');
+        function editImage(imageUrl, imageId) {
+            fetch('/edit_image', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({image_url: imageUrl, image_id: imageId}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const editResults = document.getElementById('edit-results');
+                editResults.innerHTML = '';
+                data.forEach((item, index) => {
+                    const imgDiv = document.createElement('div');
+                    imgDiv.className = 'edit-image-item';
+                    imgDiv.innerHTML = `
+                        <img src="${item.thumbnail_url}" alt="${item.alt}" loading="lazy">
+                        <button onclick="replaceImage('${imageId}', '${item.full_image_url}')">Use this image</button>
+                    `;
+                    editResults.appendChild(imgDiv);
                 });
+                document.getElementById('edit-modal').style.display = 'block';
             });
-        });
+        }
+
+        function replaceImage(imageId, newImageUrl) {
+            // Update the image in the preview
+            const imgElement = document.querySelector(`img[src*="${imageId}"]`);
+            if (imgElement) {
+                imgElement.src = newImageUrl;
+            }
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
-        
