@@ -1,0 +1,35 @@
+2025-03-07 20:52:05,882 - instabot version: 0.117.0 (bot) - INFO - Instabot version: 0.117.0 Started
+2025-03-07 20:52:05,882 - instabot version: 0.117.0 (bot) - DEBUG - Bot imported from C:\Users\valen\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\instabot\bot\bot.py
+2025-03-07 20:52:05,891 - instabot version: 0.117.0 (api_login) - INFO - Not yet logged in starting: PRE-LOGIN FLOW!
+2025-03-07 20:52:06,293 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/get_prefill_candidates/ returned response: <Response [200]>
+2025-03-07 20:52:06,669 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: qe/sync/ returned response: <Response [200]>
+2025-03-07 20:52:07,089 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: launcher/sync/ returned response: <Response [200]>
+2025-03-07 20:52:07,395 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/contact_point_prefill/ returned response: <Response [200]>
+2025-03-07 20:52:10,077 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/login/ returned response: <Response [400]>
+2025-03-07 20:52:10,077 - instabot version: 0.117.0 (api) - DEBUG - Responsecode indicates error; response content: b'{"message":"We can send you an email to help you get back into your account.","status":"fail","error_title":"Forgotten password for your_username","buttons":[{"title":"Send email","action":"send_one_click_login_email"},{"title":"Try Again","action":"dismiss"}],"is_cp_nonce_flow":false,"login_identifer_type":"username","login_user_input":"your_username","qe_device_id":"7e14f00f-5179-4d21-a128-28da51c33d9b","login_attempt_count":1,"login_source":"unknown","error_code":1,"invalid_credentials":true,"exception_name":"UserInvalidCredentials","error_type":"bad_password"}'
+2025-03-07 20:52:10,077 - instabot version: 0.117.0 (api) - ERROR - Request returns 400 error!
+2025-03-07 20:52:10,082 - instabot version: 0.117.0 (api) - INFO - Instagram's error message: We can send you an email to help you get back into your account.
+2025-03-07 20:52:10,084 - instabot version: 0.117.0 (api) - INFO - Error type: bad_password
+2025-03-07 20:52:10,087 - instabot version: 0.117.0 (api) - ERROR - Failed to login go to instagram and change your password
+2025-03-07 20:52:10,089 - instabot version: 0.117.0 (api) - INFO - Username or password is incorrect.
+2025-03-07 20:53:06,859 - instabot version: 0.117.0 (bot) - INFO - Instabot version: 0.117.0 Started
+2025-03-07 20:53:06,862 - instabot version: 0.117.0 (bot) - DEBUG - Bot imported from C:\Users\valen\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\instabot\bot\bot.py
+2025-03-07 20:53:06,864 - instabot version: 0.117.0 (api_login) - INFO - Not yet logged in starting: PRE-LOGIN FLOW!
+2025-03-07 20:53:07,165 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/get_prefill_candidates/ returned response: <Response [200]>
+2025-03-07 20:53:07,541 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: qe/sync/ returned response: <Response [200]>
+2025-03-07 20:53:08,087 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: launcher/sync/ returned response: <Response [200]>
+2025-03-07 20:53:08,866 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/contact_point_prefill/ returned response: <Response [200]>
+2025-03-07 20:53:11,030 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/login/ returned response: <Response [400]>
+2025-03-07 20:53:11,031 - instabot version: 0.117.0 (api) - DEBUG - Responsecode indicates error; response content: b'{"message":"You\'ll need to update Instagram to the latest version before you can use the app.","status":"fail","error_type":"block_eu_user_login_in_old_app"}'
+2025-03-07 20:53:11,032 - instabot version: 0.117.0 (api) - ERROR - Request returns 400 error!
+2025-03-07 20:53:11,039 - instabot version: 0.117.0 (api) - INFO - Instagram's error message: You'll need to update Instagram to the latest version before you can use the app.
+2025-03-07 20:53:11,043 - instabot version: 0.117.0 (api) - INFO - Error type: block_eu_user_login_in_old_app
+2025-03-07 20:53:11,048 - instabot version: 0.117.0 (api) - ERROR - Failed to login go to instagram and change your password
+2025-03-07 20:53:11,058 - instabot version: 0.117.0 (api) - INFO - Username or password is incorrect.
+2025-03-07 20:53:36,463 - instabot version: 0.117.0 (bot) - INFO - Instabot version: 0.117.0 Started
+2025-03-07 20:53:36,467 - instabot version: 0.117.0 (bot) - DEBUG - Bot imported from C:\Users\valen\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\instabot\bot\bot.py
+2025-03-07 20:53:36,468 - instabot version: 0.117.0 (api_login) - INFO - Not yet logged in starting: PRE-LOGIN FLOW!
+2025-03-07 20:53:36,716 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/get_prefill_candidates/ returned response: <Response [200]>
+2025-03-07 20:53:36,979 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: qe/sync/ returned response: <Response [200]>
+2025-03-07 20:53:37,384 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: launcher/sync/ returned response: <Response [200]>
+2025-03-07 20:53:37,633 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/contact_point_prefill/ returned response: <Response [200]>
