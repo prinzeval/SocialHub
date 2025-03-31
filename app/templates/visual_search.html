@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #405DE6;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .original-image {
+            margin: 20px auto;
+            text-align: center;
+        }
+        .original-image img {
+            max-width: 100%;
+            max-height: 400px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        .search-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        .btn {
+            padding: 10px 15px;
+            background-color: #405DE6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            margin: 5px 0;
+        }
+        .btn:hover {
+            background-color: #2C3E8C;
+        }
+        .instructions {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .custom-url-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #custom-image-url {
+            width: 70%;
+            padding: 8px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Visual Search</h1>
+    
+    <div class="container">
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ol>
+                <li>Below you can see the original image from Instagram.</li>
+                <li>Use the embedded Bing Visual Search to find similar images.</li>
+                <li>When you find an image you want to use, copy its URL.</li>
+                <li>Paste the URL in the "Custom Image URL" field below.</li>
+                <li>Click "Use This Image" to replace the original image.</li>
+            </ol>
+        </div>
+        
+        <div class="original-image">
+            <h3>Original Image:</h3>
+            <img id="original-image" src="{{ image_url }}" alt="Original Image">
+        </div>
+        
+        <div class="search-container">
+            <h3>Search for Similar Images:</h3>
+            <iframe src="https://www.bing.com/images/discover?FORM=ILPMFT" class="search-frame" id="search-frame"></iframe>
+        </div>
+        
+        <div class="custom-url-container">
+            <h3>Use Custom Image:</h3>
+            <input type="text" id="custom-image-url" placeholder="Paste image URL here">
+            <button class="btn" onclick="useCustomImage()">Use This Image</button>
+        </div>
+        
+        <div>
+            <a href="/download" class="btn">Return to Downloader</a>
+        </div>
+    </div>
+    
+    <script>
+        // Store the image ID from the server
+        const imageId = "{{ image_id }}";
+        
+        // Function to use a custom image URL
+        function useCustomImage() {
+            const customUrl = document.getElementById('custom-image-url').value.trim();
+            if (!customUrl) {
+                alert('Please enter a valid image URL');
+                return;
+            }
+            
+            // Update the preview
+            document.getElementById('original-image').src = customUrl;
+            
+            // Send the new URL to the server
+            fetch('/use_replacement_image', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    image_id: imageId,
+                    new_image_url: customUrl
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Image updated successfully!');
+                } else {
+                    alert('Error updating image: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);
+            });
+        }
+        
+        // Initialize the search with the current image (optional)
+        window.onload = function() {
+            const searchFrame = document.getElementById('search-frame');
+            const originalImage = document.getElementById('original-image').src;
+            
+            // You could try to set up a message passing system to communicate with the iframe
+            // but it's complex due to cross-origin restrictions
+            // For now, we'll just provide instructions to the user
+        };
+    </script>
+</body>
+</html>
