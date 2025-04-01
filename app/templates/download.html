@@ -46,6 +46,8 @@
             border-radius: 5px;
             width: 320px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s ease;
         }
         .media-item img, .media-item video {
             width: 100%;
@@ -142,6 +144,57 @@
             max-width: 100px;
             max-height: 100px;
         }
+        /* Drag and drop styling */
+        .media-item::after {
+            content: "Drag & drop image here to replace";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(64, 93, 230, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+            pointer-events: none;
+            z-index: 10;
+            width: 80%;
+        }
+        .media-item:hover::after {
+            opacity: 0.2;
+        }
+        .media-item.drag-over {
+            box-shadow: 0 0 15px rgba(64, 93, 230, 0.8);
+        }
+        .media-item.drag-over::after {
+            opacity: 1;
+        }
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: none;
+        }
+        .status-message.success {
+            background-color: #4CAF50;
+        }
+        .status-message.error {
+            background-color: #F44336;
+        }
+        .status-message.info {
+            background-color: #2196F3;
+        }
+        /* Add visual cue that images are droppable */
+        .media-item img {
+            cursor: copy;
+        }
     </style>
 </head>
 <body>
@@ -162,7 +215,7 @@
         <div class="media-count">Found {{ media_urls|length }} media item{% if media_urls|length > 1 %}s{% endif %}</div>
         <div class="media-container">
             {% for media in media_urls %}
-                <div class="media-item">
+                <div class="media-item" data-media-id="{{ media.id }}">
                     <div class="media-number">Item {{ loop.index }} of {{ media_urls|length }}</div>
                     {% if media.type == 'image' %}
                         <img src="{{ media.preview_url }}" alt="Instagram Image" loading="lazy">
@@ -174,7 +227,9 @@
                     {% endif %}
                     <div class="caption">{{ media.caption }}</div>
                     <a href="{{ url_for('download_media', media_id=media.id, media_type=media.type) }}" class="download-btn">Download {{ media.type|capitalize }}</a>
-                    <button class="edit-btn" onclick="editImage('{{ media.original_url }}', '{{ media.id }}')">Edit</button>
+                    {% if media.type == 'image' %}
+                        <button class="edit-btn" onclick="editImage('{{ media.original_url }}', '{{ media.id }}')">Edit</button>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
@@ -189,7 +244,11 @@
     </div>
 
     <script>
+        // Store media IDs for direct access
+        const mediaData = {};
+
         function editImage(imageUrl, imageId) {
+            showMessage('Fetching similar images...', 'info');
             fetch('/edit_image', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -199,31 +258,251 @@
             .then(data => {
                 const editResults = document.getElementById('edit-results');
                 editResults.innerHTML = '';
-                data.forEach((item, index) => {
-                    const imgDiv = document.createElement('div');
-                    imgDiv.className = 'edit-image-item';
-                    imgDiv.innerHTML = `
-                        <img src="${item.thumbnail_url}" alt="${item.alt}" loading="lazy">
-                        <button onclick="replaceImage('${imageId}', '${item.full_image_url}')">Use this image</button>
-                    `;
-                    editResults.appendChild(imgDiv);
-                });
+                
+                if (data.error) {
+                    editResults.innerHTML = `<div class="error">${data.error}</div>`;
+                } else if (data.length === 0) {
+                    editResults.innerHTML = '<div class="info">No similar images found</div>';
+                } else {
+                    data.forEach((item, index) => {
+                        const imgDiv = document.createElement('div');
+                        imgDiv.className = 'edit-image-item';
+                        imgDiv.innerHTML = `
+                            <img src="${item.thumbnail_url}" alt="${item.alt}" loading="lazy">
+                            <button onclick="replaceImage('${imageId}', '${item.full_image_url}')">Use this image</button>
+                        `;
+                        editResults.appendChild(imgDiv);
+                    });
+                }
+                
                 document.getElementById('edit-modal').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching edit options:', error);
+                showMessage('Error fetching similar images', 'error');
             });
         }
 
-        function replaceImage(imageId, newImageUrl) {
-            // Update the image in the preview
-            const imgElement = document.querySelector(`img[src*="${imageId}"]`);
-            if (imgElement) {
-                imgElement.src = newImageUrl;
-            }
+        function replaceImage(mediaId, newImageUrl) {
+            updateImage(mediaId, newImageUrl);
             closeModal();
         }
 
         function closeModal() {
             document.getElementById('edit-modal').style.display = 'none';
         }
+
+        // Extract media ID from src URL
+        function extractMediaIdFromSrc(src) {
+            // Try to extract from preview URL pattern
+            const previewMatch = src.match(/\/preview\/([^\/]+)\/image/);
+            if (previewMatch && previewMatch[1]) {
+                return previewMatch[1];
+            }
+            
+            // Fallback: split the URL and look for position after 'preview'
+            const urlParts = src.split('/');
+            const mediaIdIndex = urlParts.indexOf('preview') + 1;
+            if (mediaIdIndex > 0 && mediaIdIndex < urlParts.length) {
+                return urlParts[mediaIdIndex];
+            }
+            
+            return null;
+        }
+
+        // Setup drag and drop for all image elements
+        function setupDragAndDrop() {
+            const mediaItems = document.querySelectorAll('.media-item');
+            
+            mediaItems.forEach(item => {
+                const img = item.querySelector('img');
+                if (!img) return; // Skip video items
+                
+                // Get media ID from data attribute or from elements
+                let mediaId = item.dataset.mediaId;
+                
+                // If no data attribute, try to get from download button
+                if (!mediaId) {
+                    const downloadBtn = item.querySelector('.download-btn');
+                    if (downloadBtn && downloadBtn.href) {
+                        const match = downloadBtn.href.match(/\/download_media\/([^\/]+)\/image/);
+                        if (match && match[1]) {
+                            mediaId = match[1];
+                        }
+                    }
+                }
+                
+                // Last resort: try to extract from image src
+                if (!mediaId) {
+                    mediaId = extractMediaIdFromSrc(img.src);
+                }
+                
+                if (mediaId) {
+                    // Store the media ID for easy access
+                    mediaData[mediaId] = { element: img };
+                    
+                    // Add drag and drop event listeners
+                    item.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        item.classList.add('drag-over');
+                    });
+                    
+                    item.addEventListener('dragleave', () => {
+                        item.classList.remove('drag-over');
+                    });
+                    
+                    item.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        item.classList.remove('drag-over');
+                        handleDrop(e, mediaId);
+                    });
+                }
+            });
+        }
+
+        // Handle the drop event
+        function handleDrop(e, mediaId) {
+            e.preventDefault();
+            
+            // Check if it's an image URL being dragged
+            const html = e.dataTransfer.getData('text/html');
+            const url = e.dataTransfer.getData('text/uri-list') || e.dataTransfer.getData('URL');
+            
+            // Parse HTML content for image if available
+            if (html) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const draggedImg = doc.querySelector('img');
+                
+                if (draggedImg && draggedImg.src) {
+                    updateImage(mediaId, draggedImg.src);
+                    return;
+                }
+            }
+            
+            // If no image in HTML, try direct URL
+            if (url && isImageUrl(url)) {
+                updateImage(mediaId, url);
+                return;
+            }
+            
+            showMessage('Please drag an image or an image link', 'error');
+        }
+
+        // Check if URL is likely an image
+        function isImageUrl(url) {
+            return /\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(url) || 
+                url.includes('image') || 
+                url.includes('img') || 
+                url.includes('photo');
+        }
+
+        // Update the image source and save to server
+        function updateImage(mediaId, newImageUrl) {
+            showMessage('Updating image...', 'info');
+            
+            // Optionally show loading indicator on the image
+            const imgElement = mediaData[mediaId]?.element || document.querySelector(`.media-item[data-media-id="${mediaId}"] img`);
+            if (imgElement) {
+                // Create temporary overlay
+                const overlay = document.createElement('div');
+                overlay.style.position = 'absolute';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                overlay.style.zIndex = '5';
+                overlay.innerHTML = '<div style="color: white;">Updating...</div>';
+                
+                const parent = imgElement.parentElement;
+                parent.style.position = 'relative';
+                parent.appendChild(overlay);
+            }
+            
+            fetch('/update_image', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    media_id: mediaId,
+                    image_url: newImageUrl
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    if (imgElement) {
+                        // Add cache-busting parameter
+                        imgElement.src = data.preview_url + '?t=' + new Date().getTime();
+                        
+                        // Remove the overlay
+                        const overlay = imgElement.parentElement.querySelector('div[style*="position: absolute"]');
+                        if (overlay) overlay.remove();
+                    }
+                    
+                    showMessage('Image updated successfully!', 'success');
+                    
+                    // Also update the download link if needed
+                    const downloadLink = document.querySelector(`.media-item[data-media-id="${mediaId}"] .download-btn`);
+                    if (downloadLink) {
+                        downloadLink.href = `/download_media/${mediaId}/image`;
+                    }
+                } else {
+                    // Remove overlay if exists
+                    if (imgElement) {
+                        const overlay = imgElement.parentElement.querySelector('div[style*="position: absolute"]');
+                        if (overlay) overlay.remove();
+                    }
+                    
+                    showMessage(data.error || 'Failed to update image', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating image:', error);
+                showMessage('Error updating image', 'error');
+                
+                // Remove overlay if exists
+                if (imgElement) {
+                    const overlay = imgElement.parentElement.querySelector('div[style*="position: absolute"]');
+                    if (overlay) overlay.remove();
+                }
+            });
+        }
+
+        // Show status message to user
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('status-message') || createMessageElement();
+            messageDiv.textContent = message;
+            messageDiv.className = `status-message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        // Create message element if it doesn't exist
+        function createMessageElement() {
+            const messageDiv = document.createElement('div');
+            messageDiv.id = 'status-message';
+            messageDiv.className = 'status-message';
+            document.body.appendChild(messageDiv);
+            return messageDiv;
+        }
+
+        // Initialize drag and drop on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupDragAndDrop();
+        });
     </script>
 </body>
 </html>

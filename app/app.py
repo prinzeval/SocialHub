@@ -340,6 +340,48 @@ def edit_image():
     app.config['MEDIA_CACHE'][image_id] = image_data[0]['full_image_url']
     
     return jsonify(image_data)
+# Add this route to app.py
 
+@app.route('/update_image', methods=['POST'])
+def update_image():
+    try:
+        data = request.get_json()
+        media_id = data.get('media_id')
+        image_url = data.get('image_url')
+        
+        if not media_id or not image_url:
+            return jsonify({"success": False, "error": "Missing media_id or image_url"}), 400
+        
+        # Validate the image URL by trying to fetch headers
+        try:
+            head_response = requests.head(image_url, timeout=5)
+            content_type = head_response.headers.get('Content-Type', '')
+            
+            if not content_type.startswith('image/'):
+                logger.warning(f"URL doesn't appear to be an image: {content_type}")
+                # We'll still try to use it, but log the warning
+        except Exception as e:
+            logger.error(f"Failed to validate image URL: {e}")
+            return jsonify({"success": False, "error": "Invalid image URL"}), 400
+        
+        # Store the new image URL in the media cache
+        media_cache = app.config.get('MEDIA_CACHE', {})
+        if media_id not in media_cache:
+            return jsonify({"success": False, "error": "Media ID not found"}), 404
+        
+        # Update the cache with the new URL
+        app.config['MEDIA_CACHE'][media_id] = image_url
+        
+        # Return success with the preview URL
+        preview_url = url_for('preview_media', media_id=media_id, media_type='image')
+        return jsonify({
+            "success": True, 
+            "preview_url": preview_url
+        })
+        
+    except Exception as e:
+        logger.error(f"Error updating image: {e}")
+        return jsonify({"success": False, "error": str(e)}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,32 +1,52 @@
+import cv2
 import pytesseract
+import numpy as np
 from PIL import Image
-import os
 
-# Set the path to tesseract.exe
+# Set Tesseract path
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-# Path to your image
-image_path = r'C:\Users\valen\Desktop\SocialHub\image3.png'
+def preprocess_image(image_path):
+    # Read image with OpenCV
+    img = cv2.imread(image_path)
+    
+    # Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    # Apply adaptive thresholding
+    thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                 cv2.THRESH_BINARY_INV, 11, 2)
+    
+    # Remove noise
+    kernel = np.ones((1, 1), np.uint8)
+    processed = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+    
+    return processed
 
-# Verify the image exists
-if not os.path.exists(image_path):
-    print(f"Error: Image not found at {image_path}")
-else:
+def extract_text(image_path):
     try:
-        # Open the image
-        img = Image.open(image_path)
+        # Preprocess image
+        processed_img = preprocess_image(image_path)
+        
+        # Configure Tesseract parameters
+        custom_config = r'--oem 3 --psm 6 -l eng'
         
         # Perform OCR
-        text = pytesseract.image_to_string(img)
+        text = pytesseract.image_to_string(processed_img, config=custom_config)
         
-        # Print extracted text
-        print("Extracted Text:")
-        print(text)
-        
-        # (Optional) Save to a text file
-        with open('extracted_text.txt', 'w', encoding='utf-8') as f:
-            f.write(text)
-        print("Text saved to extracted_text.txt")
-        
+        return text.strip()
+    
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        return f"Error: {str(e)}"
+
+# Usage
+image_path = r'C:\Users\valen\Desktop\SocialHub\image3.png'
+extracted_text = extract_text(image_path)
+
+print("Original Output:")
+print(extracted_text)
+
+# Post-processing to clean common OCR errors
+clean_text = extracted_text.replace('|', 'I').replace(']', 'J').replace('[', '')
+print("\nCleaned Output:")
+print(clean_text)
