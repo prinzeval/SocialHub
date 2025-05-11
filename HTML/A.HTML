@@ -3,137 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Utility Billing System</title>
+    <title>Image Resizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            margin: 20px 0;
+        }
+        #original, #resized {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Utility Billing System</div>
-        <nav>
-            <ul>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="customers.html">Customers</a></li>
-                <li><a href="accounts.html">Accounts</a></li>
-                <li><a href="properties.html">Properties</a></li>
-                <li><a href="meters.html">Meters</a></li>
-                <li><a href="billing.html">Billing</a></li>
-                <li><a href="payments.html">Payments</a></li>
-                <li><a href="reports.html">Reports</a></li>
-                <li><a href="configuration.html">Configuration</a></li>
-            </ul>
-        </nav>
-        <div class="user-menu">
-            <span>Welcome, Admin</span>
-            <button>Logout</button>
-        </div>
-    </header>
+    <h1>Image Resizer (1080px × 1340px)</h1>
+    
+    <div class="container">
+        <label for="imageInput">Select an image:</label><br>
+        <input type="file" id="imageInput" accept="image/*">
+    </div>
+    
+    <div class="container">
+        <h3>Original Image:</h3>
+        <img id="original" src="" alt="Original image will appear here">
+    </div>
+    
+    <div class="container">
+        <button id="resizeBtn">Resize Image</button>
+    </div>
+    
+    <div class="container">
+        <h3>Resized Image (1080px × 1340px):</h3>
+        <img id="resized" src="" alt="Resized image will appear here">
+        <div id="dimensions"></div>
+        <button id="downloadBtn" style="display: none;">Download Resized Image</button>
+    </div>
 
-    <main>
-        <h1>Dashboard</h1>
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const originalImg = document.getElementById('original');
+        const resizedImg = document.getElementById('resized');
+        const resizeBtn = document.getElementById('resizeBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const dimensionsDiv = document.getElementById('dimensions');
         
-        <section class="quick-actions">
-            <h2>Quick Actions</h2>
-            <button>New Customer</button>
-            <button>Record Payment</button>
-            <button>Generate Bill</button>
-            <button>Enter Meter Reading</button>
-        </section>
-
-        <section class="kpi-cards">
-            <h2>Key Metrics</h2>
-            <div class="kpi-container">
-                <div class="kpi-card">
-                    <h3>Total Customers</h3>
-                    <p class="kpi-value">24,567</p>
-                    <p class="kpi-trend">+3.5% from last month</p>
-                </div>
-                <div class="kpi-card">
-                    <h3>Active Accounts</h3>
-                    <p class="kpi-value">22,184</p>
-                    <p class="kpi-trend">+2.1% from last month</p>
-                </div>
-                <div class="kpi-card">
-                    <h3>Revenue MTD</h3>
-                    <p class="kpi-value">₦124,738,450</p>
-                    <p class="kpi-trend">+5.3% from last month</p>
-                </div>
-                <div class="kpi-card">
-                    <h3>Outstanding Debts</h3>
-                    <p class="kpi-value">₦42,156,789</p>
-                    <p class="kpi-trend">-1.2% from last month</p>
-                </div>
-            </div>
-        </section>
+        // Display the selected image
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    originalImg.src = event.target.result;
+                    resizedImg.src = '';
+                    downloadBtn.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
         
-        <section class="recent-activity">
-            <h2>Recent Activity</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date/Time</th>
-                        <th>Type</th>
-                        <th>Details</th>
-                        <th>User</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>27/02/2025 09:45</td>
-                        <td>Payment</td>
-                        <td>Payment of ₦45,000 for Account #AC78954</td>
-                        <td>John Agent</td>
-                        <td><button>View</button></td>
-                    </tr>
-                    <tr>
-                        <td>27/02/2025 09:30</td>
-                        <td>Bill Generated</td>
-                        <td>Bill #BL12345 for Account #AC65432</td>
-                        <td>System</td>
-                        <td><button>View</button></td>
-                    </tr>
-                    <tr>
-                        <td>27/02/2025 09:15</td>
-                        <td>Meter Reading</td>
-                        <td>Reading of 12345 kWh for Meter #MT54321</td>
-                        <td>Field Agent</td>
-                        <td><button>View</button></td>
-                    </tr>
-                    <tr>
-                        <td>27/02/2025 09:00</td>
-                        <td>Customer Created</td>
-                        <td>New customer John Doe added</td>
-                        <td>Admin User</td>
-                        <td><button>View</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button>View All Activity</button>
-        </section>
+        // Resize the image when button is clicked
+        resizeBtn.addEventListener('click', function() {
+            if (!originalImg.src) {
+                alert('Please select an image first');
+                return;
+            }
+            
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions
+            canvas.width = 1080;
+            canvas.height = 1340;
+            
+            // Draw the image onto the canvas with the new dimensions
+            ctx.drawImage(originalImg, 0, 0, 1080, 1340);
+            
+            // Convert canvas to data URL
+            const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            
+            // Display the resized image
+            resizedImg.src = resizedDataUrl;
+            dimensionsDiv.textContent = 'Dimensions: 1080px × 1340px';
+            
+            // Show download button
+            downloadBtn.style.display = 'inline-block';
+        });
         
-        <section class="alerts">
-            <h2>Alerts & Notifications</h2>
-            <ul>
-                <li>
-                    <span class="alert-priority high">High</span>
-                    <span class="alert-message">15 meter readings pending verification</span>
-                    <button>View</button>
-                </li>
-                <li>
-                    <span class="alert-priority medium">Medium</span>
-                    <span class="alert-message">120 accounts with bills overdue by 30+ days</span>
-                    <button>View</button>
-                </li>
-                <li>
-                    <span class="alert-priority low">Low</span>
-                    <span class="alert-message">System maintenance scheduled for 01/03/2025</span>
-                    <button>View</button>
-                </li>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Utility Billing System</p>
-    </footer>
+        // Download the resized image
+        downloadBtn.addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.download = 'resized_image.jpg';
+            link.href = resizedImg.src;
+            link.click();
+        });
+    </script>
 </body>
 </html>

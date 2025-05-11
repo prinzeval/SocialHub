@@ -83,6 +83,9 @@ def scrape_instagram(instagram_pages, post_limit=10):
         return {"error": "No cookies found. Please make sure cookies.pkl exists."}
     driver.refresh()
     time.sleep(3)
+    driver.refresh()
+    time.sleep(7)
+    
     output = {}
     for page in instagram_pages:
         page = page.strip()
